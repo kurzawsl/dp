@@ -46,69 +46,6 @@ class ProductFilter
   // 3 criteria = 7 methods
 }
 
-// we introduce two new interfaces that are open for extension
-interface Specification<T>
-{
-  boolean isSatisfied(T item);
-}
-
-interface Filter<T>
-{
-  Stream<T> filter(List<T> items, Specification<T> spec);
-}
-
-class ColorSpecification implements Specification<Product>
-{
-  private Color color;
-
-  public ColorSpecification(Color color) {
-    this.color = color;
-  }
-
-  @Override
-  public boolean isSatisfied(Product p) {
-    return p.color == color;
-  }
-}
-
-class SizeSpecification implements Specification<Product>
-{
-  private Size size;
-
-  public SizeSpecification(Size size) {
-    this.size = size;
-  }
-
-  @Override
-  public boolean isSatisfied(Product p) {
-    return p.size == size;
-  }
-}
-
-class AndSpecification<T> implements Specification<T>
-{
-  private Specification<T> first, second;
-
-  public AndSpecification(Specification<T> first, Specification<T> second) {
-    this.first = first;
-    this.second = second;
-  }
-
-  @Override
-  public boolean isSatisfied(T item) {
-    return first.isSatisfied(item) && second.isSatisfied(item);
-  }
-
-}
-
-class BetterFilter implements Filter<Product>
-{
-  @Override
-  public Stream<Product> filter(List<Product> items, Specification<Product> spec) {
-    return items.stream().filter(p -> spec.isSatisfied(p));
-  }
-}
-
 class OCPDemo
 {
   public static void main(String[] args) {
